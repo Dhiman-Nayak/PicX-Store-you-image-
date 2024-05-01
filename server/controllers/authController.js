@@ -1,5 +1,5 @@
 import ethers from "ethers"
-
+import  UserSchema from "../models/User.js"
 const authController= async (req,res)=>{
     try {
         const {signature} = req.body
@@ -12,6 +12,14 @@ const authController= async (req,res)=>{
         console.log(recoveredAddress);
 
         if(address.toLowerCase()===recoveredAddress.toLocaleLowerCase()){
+
+            const user= await UserSchema.findOne({userAddress:recoveredAddress.toLocaleLowerCase()})
+            if(!user){
+                const createdUser=await UserSchema.create({userAddress:recoveredAddress.toLocaleLowerCase()})
+                console.log("User Created ::",createdUser);
+            }
+
+
             res.status(200).json({massage:"Authentication Sucessfull"})
         }else{
             res.status(400).json({massage:"Authentication Failed"})

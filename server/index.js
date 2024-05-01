@@ -1,5 +1,6 @@
 import express from "express";
 import authenticationRoute from "./routes/authenticationRoute.js"
+import uploadImageRoute from "./routes/uploadImageRoute.js"
 
 import cors from "cors";
 import {config} from "./config/serverConfig.js"
@@ -12,6 +13,7 @@ const app=express();
 app.use(cors())
 app.use(express.json())
 app.use("/api",authenticationRoute)
+app.use("/api",uploadImageRoute)
 
 const serverStart= async ()=>{
     try {
