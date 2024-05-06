@@ -23,8 +23,16 @@ function Wallet() {
   };
 
   return (
-    <div>
-      <button onClick={handleWalletConnection}>Connect</button>
+    <div className="text-center p-6 bg-slate-400">
+      <h1 className="text-white text-4xl mb-6 font-bold">Welcome to PicX</h1>
+      <div className="flex justify-center">
+        <button
+          onClick={handleWalletConnection}
+          className="py-3 px-6 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        >
+          Connect Wallet
+        </button>
+      </div>
     </div>
   );
 }

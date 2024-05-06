@@ -8,8 +8,9 @@ function Home() {
   const {selectedAccount}=web3State;
   // console.log(selectedAccount);
   return (
-    <div>
+    <div className='relative h-full w-screen flex flex-col justify-center items-center'>
       <UploadImage />
+      <GetImage/>
     </div>
   )
 }

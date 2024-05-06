@@ -7,10 +7,10 @@
 import multer from "multer";
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        // Define the destination directory
-        cb(null, 'temp/');
-    },
+    // destination: function (req, file, cb) {
+    //     // Define the destination directory
+    //     cb(null, 'temp/');
+    // },
     filename: function (req, file, cb) {
         // Define the file name
         cb(null, file.originalname+"-"+Date.now());
