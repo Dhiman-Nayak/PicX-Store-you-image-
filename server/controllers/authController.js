@@ -1,5 +1,7 @@
 import ethers from "ethers"
 import  UserSchema from "../models/User.js"
+import jwt from "jsonwebtoken"
+import {config} from "../config/serverConfig.js"
 const authController= async (req,res)=>{
     try {
         const {signature} = req.body
@@ -19,8 +21,10 @@ const authController= async (req,res)=>{
                 console.log("User Created ::",createdUser);
             }
 
-
-            res.status(200).json({massage:"Authentication Sucessfull"})
+            const token=jwt.sign({
+                address
+            },config.JWT_SECRET_KEY)
+            res.status(200).json({massage:"Authentication Sucessfull",token})
         }else{
             res.status(400).json({massage:"Authentication Failed"})
 

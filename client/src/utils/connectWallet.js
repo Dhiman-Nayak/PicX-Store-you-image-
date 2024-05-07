@@ -28,7 +28,9 @@ export const connectWallet= async ()=>{
 
         const url=`http://localhost:3000/api/authenticate?address=${selectedAccount}`
         const res=await axios.post(url,dataSignature)
-        console.log(res.data);
+        console.log(res.data,res.data.token);
+        const token=res.data.token
+        localStorage.setItem("token",token)
         const contractAddress= "0x84dD637d5724cA3cC49cDc0DD3a4E1d3aF91F79E"
         const contractInstance= new ethers.Contract(contractAddress,contractAbi,signer)
     

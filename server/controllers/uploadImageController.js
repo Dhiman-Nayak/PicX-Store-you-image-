@@ -10,7 +10,7 @@ import encryptFile from "../utils/encryption.js";
 
 const uploadImageController = async (req, res,next) => {
   try {
-    const userAddress="0x84590BFFD27CcEe8b7acd840F846eD79A6FCCD9E"
+    const userAddress=req.address
     const user=await UserSchema.findOne({userAddress:userAddress.toLowerCase()})
     if(!user){
         throw new Error("User not exist")

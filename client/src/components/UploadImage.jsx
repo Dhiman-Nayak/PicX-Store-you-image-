@@ -35,15 +35,23 @@ function UploadImage() {
       const formData = new FormData();
       formData.append("file", file);
       const url = `http://localhost:3000/api/uploadImage`;
-      // const res = await axios.post(url, formData);
-      await toast.promise(axios.post(url, formData),{
-        loading:"Image is uploading",
-        success:async ()=>{
-          await uploadImageHash(selectedAccount,res.data.ipfsHash)
-          return "Image upload Successful"
-        },
-        error:"Image upload failed"
-      })
+      const token=localStorage.getItem("token")
+      const config={
+        headers:{
+          "x-access-token":token
+        }
+      }
+      const res = await axios.post(url, formData,config);
+      await uploadImageHash(selectedAccount,res.data.ipfsHash)
+      toast.success("Image upload Successful")
+      // await toast.promise(axios.post(url, formData,config),{
+      //   loading:"Image is uploading",
+      //   success:async (res)=>{
+      //     await uploadImageHash(selectedAccount,res.data.ipfsHash)
+      //     return "Image upload Successful"
+      //   },
+      //   error:"Image upload failed"
+      // })
       setLoading(false)
     } catch (error) {
       console.log(error);
@@ -67,7 +75,7 @@ function UploadImage() {
     //   >Upload</button>
     // </div>
     <div className="h-full w-screen flex flex-col justify-center items-center gap-6">
-    <p className="font-semibold md:text-[24px]">
+    <p className=" text-4xl font-semibold text-white shadow-lg m-8">
       Upload file with Web3s Security
     </p>
     <div className="w-full flex justify-center items-center">
@@ -75,7 +83,9 @@ function UploadImage() {
         type="file"
         accept=".jpg, .jpeg, .png"
         onChange={(e) => setFile(e.target.files[0])}
-        className="w-[200px] md:w-[210px]"
+        // className="w-[200px] md:w-[210px]"
+        className="w-[200px] md:w-[210px] p-2 border border-gray-300 rounded-md bg-white shadow-sm bg-transparent focus:outline-none focus:border-blue-500"
+
       />
     </div>
     {file ? (
