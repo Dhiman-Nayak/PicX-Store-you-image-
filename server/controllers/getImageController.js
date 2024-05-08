@@ -29,7 +29,7 @@ const getImageController = async (req,res,next) => {
       throw new Error("Pagination error")
     }
     const ipfsHashArray=req.body.slice(si,Math.min(req.body.length,ei))
-    console.log(ipfsHashArray);
+    // console.log(ipfsHashArray);
 
     const decryptedImageArr=[]
     if(ipfsHashArray.length!=0){
@@ -37,20 +37,21 @@ const getImageController = async (req,res,next) => {
         const res= await returnIpfsResponse(ipfsHash)
         return res
       }))
-
+      // console.log(encryptedDataArray);
       for(const img of encryptedDataArray){
-        console.log(img);
+        // console.log(img);
         // console.log(user.encryptionKey);
         const decryptImgData= decryptFile(img.encryptedData,img.iv,user.encryptionKey)
+        // console.log("gg",decryptImgData);
         decryptedImageArr.push(decryptImgData.toString('base64'))
       }
     }
 
     console.log(decryptedImageArr);
 
-    res.status(200).json({ massage: "Image Sent Successfully" },decryptedImageArr);
+    res.status(200).json({ massage: "Image Sent Successfully" ,decryptedImageArr});
   } catch (error) {
-    console.log(error);
+    console.log("Failed to Retreived the message",error);
     res.status(500).json({ massage: "Internal Server Error" });
   }
 };
