@@ -5,7 +5,7 @@ import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom";
 import {ImageUp} from "lucide-react"
 
-function UploadImage() {
+function UploadImage({reloadEffect}) {
   const navigateTo = useNavigate();
   const [loading, setLoading] = useState(false)
   const [file, setFile] = React.useState(null);
@@ -15,7 +15,7 @@ function UploadImage() {
 
   console.log("gg",selectedAccount,contractInstance);
   const uploadImageHash = async (selectedAccount,ipfsHash)=>{
-    console.log(selectedAccount,ipfsHash);
+    // console.log(selectedAccount,ipfsHash);
     const tx= await contractInstance.uploadFiles(selectedAccount,ipfsHash)
     await toast.promise(tx.wait(),{
       loading:"Transaction is under progress",
@@ -53,12 +53,13 @@ function UploadImage() {
       //   error:"Image upload failed"
       // })
       setLoading(false)
+      reloadEffect()
     } catch (error) {
       console.log(error);
       toast.error("Image upload failed")
     }
   };
-  console.log(file);
+  // console.log(file);
   return (
     // <div>
     //   <input

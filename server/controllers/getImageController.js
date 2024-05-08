@@ -29,10 +29,10 @@ const getImageController = async (req,res,next) => {
       throw new Error("Pagination error")
     }
     const ipfsHashArray=req.body.slice(si,Math.min(req.body.length,ei))
-    // console.log(ipfsHashArray);
+    console.log(user.userAddress,ipfsHashArray.length);
 
     const decryptedImageArr=[]
-    if(ipfsHashArray.length!=0){
+    if(ipfsHashArray.length>0){
       const encryptedDataArray=await Promise.all(ipfsHashArray.map(async (ipfsHash)=>{
         const res= await returnIpfsResponse(ipfsHash)
         return res
@@ -47,7 +47,7 @@ const getImageController = async (req,res,next) => {
       }
     }
 
-    console.log(decryptedImageArr);
+    // console.log(decryptedImageArr);
 
     res.status(200).json({ massage: "Image Sent Successfully" ,decryptedImageArr});
   } catch (error) {

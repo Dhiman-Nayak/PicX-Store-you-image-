@@ -4,7 +4,7 @@ import { useWeb3Context } from "../contexts/useWeb3Context";
 import toast from "react-hot-toast";
 import {CircleArrowLeft,CircleArrowRight } from "lucide-react"
 
-function GetImage() {
+function GetImage({reload}) {
   const { web3State } = useWeb3Context();
   const { selectedAccount, contractInstance } = web3State;
 
@@ -20,8 +20,9 @@ function GetImage() {
     } catch (error) {
       toast.error("Error Fetching Images");
     } finally {
+      setLoading(false)
     }
-  }, [contractInstance, currentPage, imagePerPage, selectedAccount]);
+  }, [contractInstance, currentPage, imagePerPage, selectedAccount,reload]);
 
   const getImageHashes = async () => {
     // console.log(selectedAccount,contractInstance);
@@ -43,7 +44,7 @@ function GetImage() {
     const res = await axios.post(url, ipfsHashesArray, config);
     setImages(res.data.decryptedImageArr);
     setLoading(false);
-    console.log(res, images);
+    // console.log(res, images);
   };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
